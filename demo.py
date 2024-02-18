@@ -40,24 +40,22 @@ df=pd.DataFrame(data,index=[0])
 
 #load preprocessor and model
 
-preprocessor=pickle.load(open(r"/home/ramy/سطح المكتب/ahmed/Data Scince and analysis and AI/Data science cousre Epsilon/Machine learning/projects/Churn project/preprocessor.pkl",'rb'))
-model = pickle.load(open(r"/home/ramy/سطح المكتب/ahmed/Data Scince and analysis and AI/Data science cousre Epsilon/Machine learning/projects/Churn project/model.pkl","rb"))
+model = pickle.load(open(r"pipeline.pkl","rb"))
 
 ##preproccessing
 df.HasCrCard=df.HasCrCard.map({"Yes":True,"No" :False})
 df.IsActiveMember=df.IsActiveMember.map({"Yes":True,"No" :False})
 
-#transform
-df_test=preprocessor.transform(df)
-
-#predict
-result=model.predict(df_test)
-
+#function predict
+def prediction(df):
+    value_predict=model.predict(df)[0]
+    if value_predict ==1:
+        return "This customer is not loyal and will want out of the service (Exited)"
+    else:
+        return "This customer is loyal and will stay in the service (Not Exited)"
+    
 #show the result
 btn=st.button("Predict")
 
 if btn:
-    if result==1:
-        st.write(f"The customer will be leave")
-    else:
-        st.write(f"The customer will be continuous")
+    st.write(prediction(df))
