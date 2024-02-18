@@ -3,7 +3,9 @@ import pickle
 import pandas as pd
 import numpy as np
 import sklearn
-
+from imblearn.over_sampling import SMOTE
+from imblearn.under_sampling import RandomUnderSampler
+from sklearn.ensemble import GradientBoostingClassifier
 # streamlit layout
 
 st.set_page_config(page_title="Churn bank",layout="wide")
